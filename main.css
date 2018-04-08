@@ -1,0 +1,26 @@
+body {
+    --main-bg-color: #17141f;
+    --navbar-main-color: #4b367c;
+}
+
+.full-navbar {
+    background-color: var(--navbar-main-color);
+/*
+     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+*/
+}
+
+.main {
+   /* display: webkit-box;*/
+
+   /* box-sizing: content-box;*/
+    overflow-x: hidden;
+    /*position: absolute;*/
+    max-width: calc(100% - 60px);
+    max-height: calc(100vh - 16rem);
+
+    width: 100%;
+}
