@@ -52,6 +52,15 @@ body {
 
     width: 67%;
     position: relative !important;
-    margin-right: 0px; // float:left;
+    margin-right: 0px; 
     flex-direction: column;
+}
+
+.center-text{
+    text-align: center;
+
+}
+
+.section-header{
+    font-size: 1.4em;
 }
