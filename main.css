@@ -11,15 +11,13 @@ body {
 
 .left-sidebar {
 
-    width: 12em;
+    width: 33%;
+    max-width: 30em;
     position: relative!important;
     margin-right: 0px;
     flex-direction: column;
 
 }
-
-
-
 
 .left-sidebar a {
     width: 100%;
@@ -36,7 +34,7 @@ body {
 .main-body {
 
     background-attachment: fixed;
-    background-position: center;
+    background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -44,6 +42,8 @@ body {
 }
 
 .main {
+    align-content: left;
+    text-align: left;
     color: var(--text-color);
 
     overflow-x: hidden;
@@ -54,13 +54,62 @@ body {
     position: relative !important;
     margin-right: 0px; 
     flex-direction: column;
+
+    transition: margin-left .4s;
 }
 
 .center-text{
     text-align: center;
-
 }
+
 
 .section-header{
     font-size: 1.4em;
+}
+
+.left-line,.center-line,.right-line{
+    font-size: 1.2em;
+    display: inline;
+    margin: auto;
+    width:33%;
+}
+.left-line{
+    text-align:left;
+    float: left;
+}
+.center-line{
+    text-align:center;
+    float:center;
+}
+.right-line{
+    text-align:right;
+    float: right;
+}
+
+@media (max-width: 993px){
+    .left-sidebar{
+        width: 100%;
+    }
+    .main {
+        max-width: 83.33333%;
+        width:  83.33333%;
+        background-attachment: fixed;
+    }
+    .left-line,.center-line,.right-line{
+        width:100%;
+        text-align:left;
+        float: left;
+    }
+}
+@media (max-width: 601px){
+    .main {
+        max-width: 99.99999%;
+        width: 99.99999%;
+        background-attachment: fixed;
+    }
+     .left-line,.center-line,.right-line{
+        width:100%;
+        text-align:left;
+        float: left;
+    }
 }
