@@ -11,8 +11,8 @@ body {
 
 .left-sidebar {
 
-    width: 33%;
-    max-width: 30em;
+    
+    width: 220px;
     position: relative!important;
     margin-right: 0px;
     flex-direction: column;
@@ -45,17 +45,20 @@ body {
     align-content: left;
     text-align: left;
     color: var(--text-color);
-
     overflow-x: hidden;
-    max-width: calc(100% - 600px);
-    max-height: calc(100vh - 16rem);
-
-    width: 67%;
+    max-height: calc(100vh - 50px);
+    width: calc(100% -  220px);
     position: relative !important;
-    margin-right: 0px; 
+    padding-right:220px;
     flex-direction: column;
-
     transition: margin-left .4s;
+}
+.main li{
+    font-size: 1.2em;
+     
+}
+.main p{
+     font-size: 1.2em;
 }
 
 .center-text{
@@ -88,26 +91,18 @@ body {
 
 @media (max-width: 993px){
     .left-sidebar{
-        width: 100%;
+        display: none;
     }
-    .main {
-        max-width: 83.33333%;
-        width:  83.33333%;
-        background-attachment: fixed;
-    }
-    .left-line,.center-line,.right-line{
-        width:100%;
-        text-align:left;
-        float: left;
-    }
-}
-@media (max-width: 601px){
     .main {
         max-width: 99.99999%;
         width: 99.99999%;
         background-attachment: fixed;
+        overflow-y: hidden;
+        padding: 0px 5px 0px;
+
+
     }
-     .left-line,.center-line,.right-line{
+    .left-line,.center-line,.right-line{
         width:100%;
         text-align:left;
         float: left;
