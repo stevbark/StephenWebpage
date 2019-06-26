@@ -3,20 +3,18 @@
         
 
     </ul>
-    <div class="main">
-        <div class="container">
+    <div ng-controller="chatroomCtrl" class="main">
+        <div >
             <div id="chatBody">
-                <h1> Text</h1>
-                <h1> Text</h1>
-                <h1> Text</h1>
-                <h1> Text</h1>
-                <h1> Text</h1>
-                <h1> Text</h1>
-                <h1> Text</h1>
+            	<div ng-repeat="record in chatLog">
+              		<h1 id={{record.ID}}>
+              			{{record.Text}}
+              		</h1>
+            	</div>
             </div>
             <div id="textInput">
-                <input type="text" name="input">
-
+                <input type="text" name="input" ng-model ="textInput">
+                	<button  ng-click = "addComment()"> submit</button>
             </div>
         </div>
     </div>
