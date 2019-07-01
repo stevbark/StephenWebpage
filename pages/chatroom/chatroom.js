@@ -19,11 +19,12 @@ app.controller("chatroomCtrl", function ($scope) {
         $scope.maxID=0;
         $scope.chatLog = [];
         $textInput="";
-        $userID= "Stephen";
+        
 
         //For Test Data
+        $userID= "Stephen";
         $scope.addCommentInit("At the moment the chat cannot communite with anyone else. Sorry. This part is still in progress.","01/01/2019");
-        $scope.addCommentInit("Test1","01/02/2019");
+        $scope.addCommentInit("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad omnis quae expedita ipsum nobis praesentium velit animi minus amet perspiciatis laboriosam similique debitis iste ratione nemo ea at corporis aliquam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad omnis quae expedita ipsum nobis praesentium velit animi minus amet perspiciatis laboriosam similique debitis iste ratione nemo ea at corporis aliquam.","01/02/2019");
 
         $scope.addCommentInit("Test2","01/02/2019");
         $scope.addCommentInit("Test3","01/05/2019");

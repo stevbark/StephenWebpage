@@ -1,21 +1,25 @@
+<head>
+	<link rel="stylesheet" href="pages\resume\resume.css">
+</head>
+
 <div class="main-body">
     <ul class="left-sidebar">
         
-
     </ul>
     <div ng-controller="chatroomCtrl" class="main">
-        <div >
-            <div id="chatBody">
-            	<div ng-repeat="record in chatLog">
-              		<h1 id={{record.ID}}>
-              			{{record.Text}}
-              		</h1>
-            	</div>
-            </div>
-            <div id="textInput">
-                <input type="text" name="input" ng-model ="textInput">
-                	<button  ng-click = "addComment()"> submit</button>
-            </div>
+        <ul id="chatBody">
+        	<li ng-repeat="record in chatLog">
+          		<div class = "chat_element" id=message_{{record.ID}}>
+          			{{record.User}}: {{record.Text}}
+          		</div>
+        	</li>
+        </ul>
+        <div id="textInput">
+            <textarea type="text"  placeholder="Send a message" name="input" ng-model ="textInput"> </textarea>
+            
+            <button  ng-click = "addComment()"> submit</button>
+
         </div>
     </div>
 </div>
+
