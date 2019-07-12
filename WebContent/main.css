@@ -1,0 +1,114 @@
+body {
+    --main-bg-color: #17141f;
+    --navbar-main-color: #4b367c;
+    --text-color: #000000;
+}
+
+.full-navbar {
+    background-color: var(--navbar-main-color);
+
+}
+
+.left-sidebar {
+
+    
+    width: 220px;
+    position: relative!important;
+    margin-right: 0px;
+    flex-direction: column;
+
+}
+
+.left-sidebar a {
+    width: 100%;
+    padding: 1em .5em 1em .5em;
+    display: block;
+
+}
+
+.left-sidebar a:hover {
+    background-color: #eee;
+    text-decoration: none;
+}
+
+.main-body {
+
+    background-attachment: fixed;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+
+}
+
+.main {
+    align-content: left;
+    text-align: left;
+    color: var(--text-color);
+    overflow-x: hidden;
+    height: calc(100vh - 50px);
+    width: calc(100% -  220px);
+    position: relative !important;
+    padding-right:220px;
+    flex-direction: column;
+    transition: margin-left .4s;
+}
+.main li{
+    font-size: 1.2em;
+     
+}
+.main p{
+     font-size: 1.2em;
+}
+
+.center-text{
+    text-align: center;
+}
+
+
+.section-header{
+    font-size: 1.4em;
+}
+
+.line_div{
+    display: flex;
+}
+.left-line,.center-line,.right-line{
+    flex: 1;
+    font-size: 1.2em;
+    display: inline;
+    margin: auto;
+    width:33%;
+}
+.left-line{
+    text-align:left;
+    float: left;
+}
+.center-line{
+    text-align:center;
+    float:center;
+}
+.right-line{
+    text-align:right;
+    float: right;
+}
+
+@media (max-width: 993px){
+    .left-sidebar{
+        display: none;
+    }
+    .main {
+        max-width: 99.99999%;
+        width: 99.99999%;
+        background-attachment: fixed;
+        overflow-y: hidden;
+        padding: 0px 5px 0px;
+
+
+    }
+    .left-line,.center-line,.right-line{
+        width:100%;
+        text-align:left;
+        float: left;
+    }
+}
