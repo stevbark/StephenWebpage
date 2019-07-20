@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,11 +30,24 @@ public class connectToDB extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+	
+		 
+
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Connection conn = null;
 		Statement stmt = null;
 		response.setContentType("text/html");
+		Map<String, String[]> values=  request.getParameterMap();
 		PrintWriter out = response.getWriter();
 
+		Iterator it = values.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        System.out.println(pair.getKey() + " = " + pair.getValue());
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
 		out.print("<h1 align='center'>End point responding  </h1>");
 		conn = getRemoteConnection();
 
@@ -39,18 +55,14 @@ public class connectToDB extends HttpServlet {
 		  try { 
 			  conn.beginRequest();
 			  stmt = conn.createStatement();
-			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values (\"Test Statement\",\"Stephen\",1);";
-			  stmt.executeUpdate(sqlTest);
-			  
+//			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values (\"Test Statement\",\"Stephen\",1);";
+//			  stmt.executeUpdate(sqlTest);
+//			  
 			  conn.endRequest(); 
 			  conn.close();
 		  
 		  } catch (SQLException e) { // TODO Auto-generated catch block
-		  e.printStackTrace(); }
-		 
-
-	}
-
+		  e.printStackTrace(); }	}
 	// Adding from
 	// https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
 	private static Connection getRemoteConnection() {
