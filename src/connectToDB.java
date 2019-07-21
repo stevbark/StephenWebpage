@@ -1,6 +1,8 @@
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,6 +16,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+
+ 
 
 //import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 //import com.amazonaws.services.rds.auth.GetIamAuthTokenRequest;
@@ -29,25 +36,32 @@ public class connectToDB extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-	
-		 
-
+		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+
+ 
+		
 		Connection conn = null;
 		Statement stmt = null;
-		response.setContentType("text/html");
-		Map<String, String[]> values=  request.getParameterMap();
+		
 		PrintWriter out = response.getWriter();
 
-		Iterator it = values.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
+		
+		HashMap<String,Object> result = null;
+		//https://stackoverflow.com/questions/1548782/retrieving-json-object-literal-from-httpservletrequest
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+		    while ((line = reader.readLine()) != null) {
+		    	 result =	 new ObjectMapper().readValue(line, HashMap.class);
+		    }
+		} catch (Exception e) { e.printStackTrace();}
+		
+		
+		response.setContentType("text/html");
 		out.print("<h1 align='center'>End point responding  </h1>");
 		conn = getRemoteConnection();
 
@@ -55,9 +69,10 @@ public class connectToDB extends HttpServlet {
 		  try { 
 			  conn.beginRequest();
 			  stmt = conn.createStatement();
-//			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values (\"Test Statement\",\"Stephen\",1);";
-//			  stmt.executeUpdate(sqlTest);
-//			  
+			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values ( \""+result.get("Text")+"\", \""+result.get("User")+"\","+result.get("Date")+");";
+			  System.out.println(sqlTest);
+			  stmt.executeUpdate(sqlTest);
+			  
 			  conn.endRequest(); 
 			  conn.close();
 		  

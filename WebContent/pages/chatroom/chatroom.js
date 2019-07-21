@@ -14,13 +14,14 @@ app.controller("chatroomCtrl", function ($scope, $http) {
     }
    
     $scope.addCommentCore = function($ID,$Text,$user,$Date){
-      
-    	 var data = {"ID":$ID,"Text":$Text,"User":$user,"Date":$Date};
-    	$scope.chatLog.push(data);
+    	if(!$Text){
+    		console.log("Needs a text value");
+    		return;
+    	}
+    	var postData = {"ID":$ID,"Text":$Text,"User":$user,"Date":$Date};
+    	$scope.chatLog.push(postData);
        
        //http://techfunda.com/howto/565/http-post-server-request
-       
-      
    
        var config = {
            headers : {
@@ -31,8 +32,11 @@ app.controller("chatroomCtrl", function ($scope, $http) {
        //http://localhost:8080/chatroom/connectToDB
        $http({
     		method: 'POST',
-    		url: '/chatroom/connectToDB',  /*You URL to post*/
-    		data: data
+    		url: '/chatroom/connectToDB',  
+    		data:JSON.stringify(postData), 
+    		headers: {
+    		   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    		}
     	})
        .then( 
     	function successCallback(response){
