@@ -22,9 +22,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
  
 
-//import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-//import com.amazonaws.services.rds.auth.GetIamAuthTokenRequest;
-//import com.amazonaws.services.rds.auth.RdsIamAuthTokenGenerator;
 
 @WebServlet(name = "connectToDB", urlPatterns = { "/connectToDB" })
 public class connectToDB extends HttpServlet {
@@ -42,7 +39,7 @@ public class connectToDB extends HttpServlet {
 			throws ServletException, IOException {
 		
 
- 
+		System.out.println("Start");
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -63,8 +60,9 @@ public class connectToDB extends HttpServlet {
 		
 		response.setContentType("text/html");
 		out.print("<h1 align='center'>End point responding  </h1>");
-		conn = getRemoteConnection();
-
+		
+			conn = getRemoteConnection();
+		
 		
 		  try { 
 			  conn.beginRequest();
@@ -78,13 +76,14 @@ public class connectToDB extends HttpServlet {
 		  
 		  } catch (SQLException e) { // TODO Auto-generated catch block
 		  e.printStackTrace(); }	}
+	
 	// Adding from
 	// https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
-	private static Connection getRemoteConnection() {
+	private static Connection getRemoteConnection()  {
 
 		if (System.getenv("RDS_HOSTNAME") != null) {
 			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
+				Class.forName("com.mysql.jdbc.Driver");
 				String dbName = System.getenv("RDS_DB_NAME");
 				String userName = System.getenv("RDS_USERNAME");
 				String password = System.getenv("RDS_PASSWORD");
@@ -92,14 +91,16 @@ public class connectToDB extends HttpServlet {
 				String port = System.getenv("RDS_PORT");
 				String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName
 						+ "&password=" + password;
+				
+				System.out.println("Connection url = " + jdbcUrl );
 				System.out.println("Getting remote connection with connection string from environment variables.");
 				Connection con = DriverManager.getConnection(jdbcUrl);
 				System.out.println("Remote connection successful.");
 				return con;
 			} catch (ClassNotFoundException e) {
-				System.out.println(e.toString());
+				System.out.println("ERROR: " + e.toString());
 			} catch (SQLException e) {
-				System.out.println(e.toString());
+				System.out.println("ERROR: " +e.toString());
 			}
 		}
 		return null;

@@ -32,7 +32,7 @@ app.controller("chatroomCtrl", function ($scope, $http) {
        //http://localhost:8080/chatroom/connectToDB
        $http({
     		method: 'POST',
-    		url: '/chatroom/connectToDB',  
+    		url: 'connectToDB',  
     		data:JSON.stringify(postData), 
     		headers: {
     		   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
