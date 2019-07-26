@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -42,8 +43,7 @@ public class connectToDB extends HttpServlet {
 		System.out.println("Start");
 		
 		Connection conn = null;
-		Statement stmt = null;
-		
+		PreparedStatement preparedStmt =  null;
 		PrintWriter out = response.getWriter();
 
 		
@@ -60,20 +60,24 @@ public class connectToDB extends HttpServlet {
 		
 		response.setContentType("text/html");
 		out.print("<h1 align='center'>End point responding  </h1>");
+		System.out.println("RDS_HOSTNAME = " + System.getProperty("RDS_HOSTNAME"));
+		conn = getRemoteConnection();
 		
-			conn = getRemoteConnection();
-		
-		
+		out.print("<h1 align='center'>More code </h1>");
 		  try { 
-			  conn.beginRequest();
-			  stmt = conn.createStatement();
-			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values ( \""+result.get("Text")+"\", \""+result.get("User")+"\","+result.get("Date")+");";
-			  System.out.println(sqlTest);
-			  stmt.executeUpdate(sqlTest);
-			  
-			  conn.endRequest(); 
-			  conn.close();
-		  
+
+			  //https://alvinalexander.com/java/java-mysql-insert-example-preparedstatement			  
+			  String sqlTest = "Insert into chatroom_db.chatroom (Text,User,Date) Values ( ?, ?, ?);";
+			  preparedStmt = conn.prepareStatement(sqlTest);
+		      preparedStmt.setString (1, (String) result.get("Text"));
+		      preparedStmt.setString (2, (String) result.get("User"));
+		      preparedStmt.setString (3, (String) result.get("Date"));
+
+		      // execute the preparedstatement
+		      preparedStmt.execute();
+
+		      conn.close();
+
 		  } catch (SQLException e) { // TODO Auto-generated catch block
 		  e.printStackTrace(); }	}
 	
@@ -81,14 +85,16 @@ public class connectToDB extends HttpServlet {
 	// https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
 	private static Connection getRemoteConnection()  {
 
-		if (System.getenv("RDS_HOSTNAME") != null) {
+		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				String dbName = System.getenv("RDS_DB_NAME");
-				String userName = System.getenv("RDS_USERNAME");
-				String password = System.getenv("RDS_PASSWORD");
-				String hostname = System.getenv("RDS_HOSTNAME");
-				String port = System.getenv("RDS_PORT");
+				System.out.println("Started Connection");
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				System.out.println("Loaded Driver");
+				String dbName = System.getProperty("RDS_DB_NAME");
+				String userName = System.getProperty("RDS_USERNAME");
+				String password = System.getProperty("RDS_PASSWORD");
+				String hostname = System.getProperty("RDS_HOSTNAME");
+				String port = System.getProperty("RDS_PORT");
 				String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName
 						+ "&password=" + password;
 				
