@@ -20,8 +20,9 @@ app.config(function ($routeProvider) {
             controller: "chatroomCtrl"
         })
 
-        .when("/red", {
-            templateUrl: "red.html"
+        .when("/survey", {
+            templateUrl: "pages/survey/survey.html",
+            controller: "surveyCtrl"
         });
 
 });
