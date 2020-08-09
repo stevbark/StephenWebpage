@@ -11,11 +11,11 @@ app.controller("surveyCtrl", function ($scope, $http) {
           data: [{
             type: "pie",
             startAngle: 0,
-            toolTipContent: "<b>{label}</b>: {y}%",
+            toolTipContent: "<b>{label}</b>: {y} votes",
             showInLegend: "true",
             legendText: "{label}",
             indexLabelFontSize: 16,
-            indexLabel: "{label} - {y}%",
+            indexLabel: "{label} - {y} votes",
             dataPoints: [
               { y: o1, label: "Option 1" },
               { y: o2, label: "Option 2" }
@@ -26,10 +26,21 @@ app.controller("surveyCtrl", function ($scope, $http) {
    
      $scope.clickOption = function($number){
         console.log("number " + $number + " selected");
+        var index = $number -1;
+        switch(index){
+          case 0:
+            o1 = o1+1;
+            chart.options.data[0].dataPoints[0]=({y:o1,label: "Option 1"});
+            break;
+          case 1:
+            o2 = o2+1;
+            chart.options.data[0].dataPoints[1]=({y:o2,label: "Option 2"});
+            break;  
+        }
 
-        o1 = o1+1;
-        console.log("o1 is " + o1);
         chart.render();
+        
+
      }
 
 
