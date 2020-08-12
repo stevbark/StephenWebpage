@@ -23,6 +23,10 @@ app.config(function ($routeProvider) {
         .when("/survey", {
             templateUrl: "pages/survey/survey.html",
             controller: "surveyCtrl"
+        })
+         .when("/tic", {
+            templateUrl: "pages/tic/tic.html",
+            controller: "ticCtrl"
         });
 
 });
