@@ -37,7 +37,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 				identifier += identifier;
 			}
 		}
-
+		document.getElementById("tictactoe").innerHTML = '';
 		document.getElementById("tictactoe").appendChild(board);
 		 $scope.initBoard();
 	}
@@ -62,7 +62,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 			var testClass = '.' + memberOf[i];
       var items = $scope.contains('#tictactoe ' + testClass, turn);
 			// winning condition: turn == N_SIZE
-			if (items.length == N_SIZE) {
+			if (items.length == ROW_SIZE) {
 				return true;
 			}
 		}
@@ -82,11 +82,11 @@ app.controller("ticCtrl", function ($scope, $http) {
 			return;
 		}
 		this.innerHTML = turn;
+
 		moves += 1;
 		score[turn] += this.identifier;
 		if ($scope.win(this)) {
-			alert('Winner: Player ' + turn);
-			$scope.initBoard();
+			setTimeout($scope.didWin, 200);
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
 			alert("Draw");
 			$scope.initBoard();
@@ -94,5 +94,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 			turn = turn === "X" ? "O" : "X";
 			document.getElementById('turn').textContent = 'Player ' + turn;
 		}
+	}
+	$scope.didWin = function(){
+		alert('Winner: Player ' + turn);
+		$scope.initBoard();
 	}
 });
