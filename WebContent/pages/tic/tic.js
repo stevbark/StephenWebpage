@@ -7,6 +7,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 	var moves;
 	var EMPTY = "&nbsp;";
 	var turn = "X";
+	var EMPTY_CELL = 'empty-cell';
+	var FULL_CELL = 'full-cell';
+
 
 	$scope.newGame = function(){
 		var board = document.createElement('table');
@@ -19,6 +22,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 			board.appendChild(row);
 			for (var j = 0; j < ROW_SIZE; j++) {
 		        var cell = document.createElement('td');
+		        cell.setAttribute('class', EMPTY_CELL);
 		        cell.setAttribute('height', 120);
 		        cell.setAttribute('width', 120);
 		        cell.setAttribute('align', 'center');
@@ -49,18 +53,21 @@ app.controller("ticCtrl", function ($scope, $http) {
 		};
 		moves = 0;
 		turn = "X";
+		document.getElementById('turn').textContent = 'Player ' + turn;
 		grid.forEach(function (square) {
 			square.innerHTML = EMPTY;
 		});
+		document.getElementById('startGameButton').innerHTML='Start Game';
 		console.log('init');
 	}
 
 	$scope.win = function(clicked) {
 		// Get all cell classes
 		var memberOf = clicked.className.split(/\s+/);
+		removeFromArray(memberOf,FULL_CELL);
 		for (var i = 0; i < memberOf.length; i++) {
 			var testClass = '.' + memberOf[i];
-      var items = $scope.contains('#tictactoe ' + testClass, turn);
+      		var items = $scope.contains('#tictactoe ' + testClass, turn);
 			// winning condition: turn == N_SIZE
 			if (items.length == ROW_SIZE) {
 				return true;
@@ -68,6 +75,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		}
 		return false;
 	}
+
 
 	$scope.contains=function(selector, text) {
 	  var elements = document.querySelectorAll(selector);
@@ -82,6 +90,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 			return;
 		}
 		this.innerHTML = turn;
+  		this.classList.remove(EMPTY_CELL);
+  		this.classList.add(FULL_CELL);
+  		document.getElementById('startGameButton').innerHTML='Reset Game';
 
 		moves += 1;
 		score[turn] += this.identifier;
@@ -98,5 +109,12 @@ app.controller("ticCtrl", function ($scope, $http) {
 	$scope.didWin = function(){
 		alert('Winner: Player ' + turn);
 		$scope.initBoard();
+	}
+
+	var removeFromArray = function(array,value){
+		var index = array.indexOf(value);
+		if(index > -1){
+			array.splice(index,1);
+		}
 	}
 });

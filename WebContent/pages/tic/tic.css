@@ -9,3 +9,19 @@ td {
 	color:#ffffff;
 	border-radius: 10px 10px 10px 10px;
 }
+
+.empty-cell{
+	background-color: black;
+	opacity: 1;
+  	transition: 0.5s;
+}
+.empty-cell:hover {
+	background-color: grey;
+	opacity: 1;
+  	transition: 0.5s;
+}
+
+.empty-cell:onclick {
+	  transform: rotateY(180deg);
+}
+
