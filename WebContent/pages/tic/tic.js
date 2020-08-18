@@ -1,4 +1,7 @@
 //https://codepen.io/vasanthkay/pen/KVzYzG
+//https://stackoverflow.com/questions/40218942/css-flip-animation-on-click
+
+// https://nnattawat.github.io/flip/
 
 app.controller("ticCtrl", function ($scope, $http) {
 	var ROW_SIZE = 3;
@@ -15,6 +18,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		var board = document.createElement('table');
     	board.setAttribute("border", 1);
     	board.setAttribute("cellspacing", 0);
+    	board.setAttribute("id","game-board");
     
 		var identifier = 1;
 		for (var i = 0; i < ROW_SIZE; i++) {
@@ -23,11 +27,10 @@ app.controller("ticCtrl", function ($scope, $http) {
 			for (var j = 0; j < ROW_SIZE; j++) {
 		        var cell = document.createElement('td');
 		        cell.setAttribute('class', EMPTY_CELL);
-		        cell.setAttribute('height', 120);
-		        cell.setAttribute('width', 120);
 		        cell.setAttribute('align', 'center');
 		        cell.setAttribute('valign', 'center');
 				cell.classList.add('col' + j,'row' + i);
+
 				if (i == j) {
 					cell.classList.add('diagonal0');
 				}
@@ -38,6 +41,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 				cell.addEventListener("click", $scope.set);
 				row.appendChild(cell);
 				grid.push(cell);
+
 				identifier += identifier;
 			}
 		}
@@ -53,6 +57,17 @@ app.controller("ticCtrl", function ($scope, $http) {
 		};
 		moves = 0;
 		turn = "X";
+		var fullCells = document.getElementsByClassName(FULL_CELL);
+		
+		while(fullCells.length>0){
+			var cell = fullCells[0];
+			cell.classList.remove(FULL_CELL);
+			cell.classList.add(EMPTY_CELL);
+		}
+			
+		
+		
+
 		document.getElementById('turn').textContent = 'Player ' + turn;
 		grid.forEach(function (square) {
 			square.innerHTML = EMPTY;
@@ -93,13 +108,14 @@ app.controller("ticCtrl", function ($scope, $http) {
   		this.classList.remove(EMPTY_CELL);
   		this.classList.add(FULL_CELL);
   		document.getElementById('startGameButton').innerHTML='Reset Game';
+	
 
 		moves += 1;
 		score[turn] += this.identifier;
 		if ($scope.win(this)) {
 			setTimeout($scope.didWin, 200);
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
-			alert("Draw");
+			endGame('draw');
 			$scope.initBoard();
 		} else {
 			turn = turn === "X" ? "O" : "X";
@@ -107,7 +123,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		}
 	}
 	$scope.didWin = function(){
-		alert('Winner: Player ' + turn);
+		endGame('Winner: Player ' + turn);
 		$scope.initBoard();
 	}
 
@@ -117,4 +133,14 @@ app.controller("ticCtrl", function ($scope, $http) {
 			array.splice(index,1);
 		}
 	}
+
+	var endGame = function(end_game_message){
+	 	var endBanner = document.createElement('div');
+	 	endBanner.setAttribute('class', 'end-ribbon');
+	 	endBanner.innerHTML=end_game_message;
+	 	document.getElementById("game-board").appendChild(endBanner);
+	}
+
+
 });
+
