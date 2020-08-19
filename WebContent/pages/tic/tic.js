@@ -12,6 +12,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 	var turn = "X";
 	var EMPTY_CELL = 'empty-cell';
 	var FULL_CELL = 'full-cell';
+	var game_over = false;
 
 
 	$scope.newGame = function(){
@@ -57,17 +58,14 @@ app.controller("ticCtrl", function ($scope, $http) {
 		};
 		moves = 0;
 		turn = "X";
+		game_over = false;
 		var fullCells = document.getElementsByClassName(FULL_CELL);
-		
 		while(fullCells.length>0){
 			var cell = fullCells[0];
 			cell.classList.remove(FULL_CELL);
 			cell.classList.add(EMPTY_CELL);
 		}
-			
-		
-		
-
+		removeBanner();
 		document.getElementById('turn').textContent = 'Player ' + turn;
 		grid.forEach(function (square) {
 			square.innerHTML = EMPTY;
@@ -101,7 +99,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 
 
 	$scope.set= function() {
-		if (this.innerHTML !== EMPTY) {
+		if (this.innerHTML !== EMPTY || game_over) {
 			return;
 		}
 		this.innerHTML = turn;
@@ -116,7 +114,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 			setTimeout($scope.didWin, 200);
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
 			endGame('draw');
-			$scope.initBoard();
 		} else {
 			turn = turn === "X" ? "O" : "X";
 			document.getElementById('turn').textContent = 'Player ' + turn;
@@ -124,7 +121,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 	}
 	$scope.didWin = function(){
 		endGame('Winner: Player ' + turn);
-		$scope.initBoard();
+		//$scope.initBoard();
 	}
 
 	var removeFromArray = function(array,value){
@@ -136,9 +133,18 @@ app.controller("ticCtrl", function ($scope, $http) {
 
 	var endGame = function(end_game_message){
 	 	var endBanner = document.createElement('div');
-	 	endBanner.setAttribute('class', 'end-ribbon');
+	 	endBanner.setAttribute('id', 'end-ribbon');
 	 	endBanner.innerHTML=end_game_message;
 	 	document.getElementById("game-board").appendChild(endBanner);
+
+	 	game_over = true;
+	}
+
+	var removeBanner =function(){
+		var endBanner = document.getElementById("end-ribbon");
+		if(endBanner){
+			endBanner.parentNode.removeChild(endBanner);
+		}
 	}
 
 
