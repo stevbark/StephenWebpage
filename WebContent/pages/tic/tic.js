@@ -1,7 +1,10 @@
 //https://codepen.io/vasanthkay/pen/KVzYzG
-//https://stackoverflow.com/questions/40218942/css-flip-animation-on-click
+//https://www.w3schools.com/howto/howto_css_flip_card.asp
 
 // https://nnattawat.github.io/flip/
+
+//https://codepen.io/Schmuh/pen/VYaEGd
+
 
 app.controller("ticCtrl", function ($scope, $http) {
 	var ROW_SIZE = 3;
@@ -27,21 +30,52 @@ app.controller("ticCtrl", function ($scope, $http) {
 			board.appendChild(row);
 			for (var j = 0; j < ROW_SIZE; j++) {
 		        var cell = document.createElement('td');
-		        cell.setAttribute('class', EMPTY_CELL);
-		        cell.setAttribute('align', 'center');
-		        cell.setAttribute('valign', 'center');
-				cell.classList.add('col' + j,'row' + i);
-
+		        //cell.classList.add('col' + j,'row' + i);
+		        var grip  = document.createElement('div');
+		        grip.setAttribute('id', 'card'+identifier); 
+		      	var div = document.createElement('div');
+		        div.setAttribute('align', 'center');
+		        div.setAttribute('valign', 'center');
+				div.classList.add('col' + j,'row' + i,EMPTY_CELL,'front');
+				div.innerHTML = EMPTY;	
 				if (i == j) {
-					cell.classList.add('diagonal0');
+					div.classList.add('diagonal0');
 				}
 				if (j == ROW_SIZE - i - 1) {
-					cell.classList.add('diagonal1');
+					div.classList.add('diagonal1');
 				}
-				cell.identifier = identifier;
-				cell.addEventListener("click", $scope.set);
+
+
+				//d2
+
+ 				var div2 = document.createElement('div');
+		      
+		        div2.setAttribute('align', 'center');
+		        div2.setAttribute('valign', 'center');
+				div2.classList.add('col' + j,'row' + i,FULL_CELL,'back');
+				div2.innerHTML = EMPTY;	
+				if (i == j) {
+					div2.classList.add('diagonal0');
+				}
+				if (j == ROW_SIZE - i - 1) {
+					div2.classList.add('diagonal1');
+				}
+
+				////
+
+				grip.identifier = identifier;
+				grip.addEventListener("click", $scope.set);
+
+				
+				grip.appendChild(div);
+				grip.appendChild(div2);
+				cell.appendChild(grip);
 				row.appendChild(cell);
 				grid.push(cell);
+
+
+				
+			
 
 				identifier += identifier;
 			}
@@ -49,6 +83,11 @@ app.controller("ticCtrl", function ($scope, $http) {
 		document.getElementById("tictactoe").innerHTML = '';
 		document.getElementById("tictactoe").appendChild(board);
 		 $scope.initBoard();
+		 for(var i =1;i<=identifier;i++){
+		 	$("#card"+i).flip({
+				  axis: 'x'
+				});
+		 }
 	}
 
 	$scope.initBoard= function() {
@@ -60,15 +99,15 @@ app.controller("ticCtrl", function ($scope, $http) {
 		turn = "X";
 		game_over = false;
 		var fullCells = document.getElementsByClassName(FULL_CELL);
-		while(fullCells.length>0){
+		/*while(fullCells.length>0){
 			var cell = fullCells[0];
 			cell.classList.remove(FULL_CELL);
 			cell.classList.add(EMPTY_CELL);
-		}
+		}*/
 		removeBanner();
 		document.getElementById('turn').textContent = 'Player ' + turn;
 		grid.forEach(function (square) {
-			square.innerHTML = EMPTY;
+			//square.innerHTML = EMPTY;
 		});
 		document.getElementById('startGameButton').innerHTML='Start Game';
 		console.log('init');
@@ -78,6 +117,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		// Get all cell classes
 		var memberOf = clicked.className.split(/\s+/);
 		removeFromArray(memberOf,FULL_CELL);
+		removeFromArray(memberOf,'back');
 		for (var i = 0; i < memberOf.length; i++) {
 			var testClass = '.' + memberOf[i];
       		var items = $scope.contains('#tictactoe ' + testClass, turn);
@@ -99,18 +139,20 @@ app.controller("ticCtrl", function ($scope, $http) {
 
 
 	$scope.set= function() {
-		if (this.innerHTML !== EMPTY || game_over) {
+		var backCell = jQuery(this).children(".back")[0];
+		if (backCell.innerHTML !== EMPTY || game_over) {
 			return;
 		}
-		this.innerHTML = turn;
-  		this.classList.remove(EMPTY_CELL);
-  		this.classList.add(FULL_CELL);
+	//	this.innerHTML = turn;
+		backCell.innerHTML=turn;
+  //		this.classList.remove(EMPTY_CELL);
+//  		this.classList.add(FULL_CELL);
+
   		document.getElementById('startGameButton').innerHTML='Reset Game';
 	
-
 		moves += 1;
 		score[turn] += this.identifier;
-		if ($scope.win(this)) {
+		if ($scope.win(backCell)) {
 			setTimeout($scope.didWin, 200);
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
 			endGame('draw');
@@ -121,7 +163,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 	}
 	$scope.didWin = function(){
 		endGame('Winner: Player ' + turn);
-		//$scope.initBoard();
 	}
 
 	var removeFromArray = function(array,value){
@@ -146,7 +187,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 			endBanner.parentNode.removeChild(endBanner);
 		}
 	}
-
+	$("#card0").flip({
+  axis: 'x'
+});
 
 });
 
