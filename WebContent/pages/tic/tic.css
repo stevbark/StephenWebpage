@@ -32,8 +32,8 @@ tr{
 
 }
 
-.empty-cell, .full-cell{
-	
+.full-cell{
+	background-color: #36d61a;
 }
 .empty-cell:hover {
 	background-color: grey;

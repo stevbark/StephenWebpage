@@ -147,7 +147,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		backCell.innerHTML=turn;
   //		this.classList.remove(EMPTY_CELL);
 //  		this.classList.add(FULL_CELL);
-
+//		$(this).flip(true);
   		document.getElementById('startGameButton').innerHTML='Reset Game';
 	
 		moves += 1;
@@ -188,8 +188,8 @@ app.controller("ticCtrl", function ($scope, $http) {
 		}
 	}
 	$("#card0").flip({
-  axis: 'x'
-});
+  		axis: 'x'
+	});
 
 });
 
