@@ -30,7 +30,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 			board.appendChild(row);
 			for (var j = 0; j < ROW_SIZE; j++) {
 		        var cell = document.createElement('td');
-		        //cell.classList.add('col' + j,'row' + i);
 		        var grip  = document.createElement('div');
 		        grip.setAttribute('id', 'card'+identifier); 
 		      	var div = document.createElement('div');
@@ -77,7 +76,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 				
 			
 
-				identifier += identifier;
+				identifier++;
 			}
 		}
 		document.getElementById("tictactoe").innerHTML = '';
@@ -177,6 +176,11 @@ app.controller("ticCtrl", function ($scope, $http) {
 	 	endBanner.setAttribute('id', 'end-ribbon');
 	 	endBanner.innerHTML=end_game_message;
 	 	document.getElementById("game-board").appendChild(endBanner);
+
+	 	var identifier = ROW_SIZE*ROW_SIZE;
+		for(var i =1;i<=identifier;i++){
+		 	$("#card"+i).prop("onclick", null).off("click");
+		 }
 
 	 	game_over = true;
 	}
