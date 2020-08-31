@@ -43,8 +43,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 				if (j == ROW_SIZE - i - 1) {
 					div.classList.add('diagonal1');
 				}
-
-
 				//d2
 
  				var div2 = document.createElement('div');
@@ -70,11 +68,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 				grip.appendChild(div2);
 				cell.appendChild(grip);
 				row.appendChild(cell);
-				grid.push(cell);
-
-
-				
-			
+				grid.push(cell);	
 
 				identifier++;
 			}
@@ -140,8 +134,11 @@ app.controller("ticCtrl", function ($scope, $http) {
 	$scope.set= function() {
 		var backCell = jQuery(this).children(".back")[0];
 		if (backCell.innerHTML !== EMPTY || game_over) {
+			jQuery(this).prop("onclick", null).off("click");
 			return;
 		}
+	//	
+		//$("#card"+i).prop("onclick", null).off("click");
 	//	this.innerHTML = turn;
 		backCell.innerHTML=turn;
   //		this.classList.remove(EMPTY_CELL);
@@ -159,6 +156,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 			turn = turn === "X" ? "O" : "X";
 			document.getElementById('turn').textContent = 'Player ' + turn;
 		}
+
+		//jQuery(this).prop("onclick", null).off("click");
+
 	}
 	$scope.didWin = function(){
 		endGame('Winner: Player ' + turn);
