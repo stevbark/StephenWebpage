@@ -111,6 +111,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 		var memberOf = clicked.className.split(/\s+/);
 		removeFromArray(memberOf,FULL_CELL);
 		removeFromArray(memberOf,'back');
+		removeFromArray(memberOf,turn);
 		for (var i = 0; i < memberOf.length; i++) {
 			var testClass = '.' + memberOf[i];
       		var items = $scope.contains('#tictactoe ' + testClass, turn);
@@ -137,13 +138,11 @@ app.controller("ticCtrl", function ($scope, $http) {
 			jQuery(this).prop("onclick", null).off("click");
 			return;
 		}
-	//	
-		//$("#card"+i).prop("onclick", null).off("click");
-	//	this.innerHTML = turn;
+
 		backCell.innerHTML=turn;
-  //		this.classList.remove(EMPTY_CELL);
-//  		this.classList.add(FULL_CELL);
-//		$(this).flip(true);
+	
+			backCell.classList.add(turn);
+	
   		document.getElementById('startGameButton').innerHTML='Reset Game';
 	
 		moves += 1;
@@ -157,7 +156,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 			document.getElementById('turn').textContent = 'Player ' + turn;
 		}
 
-		//jQuery(this).prop("onclick", null).off("click");
 
 	}
 	$scope.didWin = function(){

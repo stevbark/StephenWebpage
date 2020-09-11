@@ -32,8 +32,16 @@ tr{
 
 }
 
-.full-cell{
-	background-color: #36d61a;
+.full-cell {
+	
+}
+
+.X{
+  background-color: #36d61a;
+}
+
+.O{
+  background-color: red;
 }
 .empty-cell:hover {
 	background-color: grey;
