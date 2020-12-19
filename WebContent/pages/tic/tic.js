@@ -139,6 +139,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 			return;
 		}
 
+		playPageFlip();
 		backCell.innerHTML=turn;
 	
 			backCell.classList.add(turn);
@@ -192,6 +193,13 @@ app.controller("ticCtrl", function ($scope, $http) {
 	$("#card0").flip({
   		axis: 'x'
 	});
+
+	var playPageFlip= function(){
+	  let audio = new Audio();
+	  audio.src = "sounds/flip.mp3";
+	  audio.load();
+	  audio.play();
+	}
 
 });
 
