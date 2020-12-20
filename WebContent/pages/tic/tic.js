@@ -149,9 +149,9 @@ app.controller("ticCtrl", function ($scope, $http) {
 		moves += 1;
 		score[turn] += this.identifier;
 		if ($scope.win(backCell)) {
-			setTimeout($scope.didWin, 200);
+			setTimeout($scope.didWin, 0);
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
-			endGame('draw');
+			setTimeout($scope.didDraw, 0);
 		} else {
 			turn = turn === "X" ? "O" : "X";
 			document.getElementById('turn').textContent = 'Player ' + turn;
@@ -161,6 +161,10 @@ app.controller("ticCtrl", function ($scope, $http) {
 	}
 	$scope.didWin = function(){
 		endGame('Winner: Player ' + turn);
+	}
+
+	$scope.didDraw = function(){
+		endGame('draw');
 	}
 
 	var removeFromArray = function(array,value){
