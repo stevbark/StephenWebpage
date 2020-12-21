@@ -1,19 +1,13 @@
 
-.main ul{
-    list-style-type:none;
-    padding-left: 0px;
-}
-.main li{
-    padding: 5px 0px 5px;
-}
 
-#textInput{
-    vertical-align: text-top;
-    bottom: 10px;
-    width: 50%;
-    height:  100px;
-}
-#textInput textarea{
-    height:  80px;
-    width: 100%;
+
+.section-header{
+	padding:15px;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: black;
+    font-weight: bold;
+    text-align: center;
+
+
 }

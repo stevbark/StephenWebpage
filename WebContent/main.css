@@ -61,6 +61,7 @@ body {
      font-size: 1.2em;
 }
 
+
 .center-text{
     text-align: center;
 }
@@ -112,3 +113,10 @@ body {
         float: left;
     }
 }
+
+.trail { 
+    position: absolute;
+    height: 6px; width: 6px;
+    border-radius: 3px;
+    background: teal;
+  }
