@@ -43,7 +43,6 @@ app.controller("ticCtrl", function ($scope, $http) {
 				if (j == ROW_SIZE - i - 1) {
 					div.classList.add('diagonal1');
 				}
-				//d2
 
  				var div2 = document.createElement('div');
 		      
@@ -57,9 +56,7 @@ app.controller("ticCtrl", function ($scope, $http) {
 				if (j == ROW_SIZE - i - 1) {
 					div2.classList.add('diagonal1');
 				}
-
-				////
-
+				
 				grip.identifier = identifier;
 				grip.addEventListener("click", $scope.set);
 
@@ -92,16 +89,10 @@ app.controller("ticCtrl", function ($scope, $http) {
 		turn = "X";
 		game_over = false;
 		var fullCells = document.getElementsByClassName(FULL_CELL);
-		/*while(fullCells.length>0){
-			var cell = fullCells[0];
-			cell.classList.remove(FULL_CELL);
-			cell.classList.add(EMPTY_CELL);
-		}*/
+		
 		removeBanner();
 		document.getElementById('turn').textContent = 'Player ' + turn;
-		grid.forEach(function (square) {
-			//square.innerHTML = EMPTY;
-		});
+
 		document.getElementById('startGameButton').innerHTML='Start Game';
 		console.log('init');
 	}
@@ -141,17 +132,16 @@ app.controller("ticCtrl", function ($scope, $http) {
 
 		playPageFlip();
 		backCell.innerHTML=turn;
-	
-			backCell.classList.add(turn);
-	
+		backCell.classList.add(turn);
   		document.getElementById('startGameButton').innerHTML='Reset Game';
 	
 		moves += 1;
 		score[turn] += this.identifier;
+
 		if ($scope.win(backCell)) {
-			setTimeout($scope.didWin, 0);
+			setTimeout($scope.didWin, 0); //must start flip before finishing game.
 		} else if (moves === ROW_SIZE * ROW_SIZE) {
-			setTimeout($scope.didDraw, 0);
+			setTimeout($scope.didDraw, 0); //ditto
 		} else {
 			turn = turn === "X" ? "O" : "X";
 			document.getElementById('turn').textContent = 'Player ' + turn;
