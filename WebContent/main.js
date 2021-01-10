@@ -9,7 +9,8 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "pages/homepage/homepage.html"
+            templateUrl: "pages/homepage/homepage.html",
+            controller: "homepageCtrl"
         })
         .when("/resume", {
             templateUrl: "pages/resume/resume.html"
