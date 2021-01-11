@@ -1,5 +1,5 @@
 app.controller("homepageCtrl", function ($scope, $http) {
-	const logo = new Vivus('logo', {   type: 'delayed',duration: 500, file:"pages/homepage/Logo.svg"});
+	const logo = new Vivus('logo', {   type: 'scenario-sync',duration: 10, delay: 0, file:"pages/homepage/Logo.svg"});
 
 	$scope.init = function(){
 		logo.reset().play();
